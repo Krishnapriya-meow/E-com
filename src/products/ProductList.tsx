@@ -40,33 +40,37 @@ export const ProductList = () => {
   useEffect(() => {
     loadData()
   }, [])
-  
+
   return (
 
     <Card.Group>
-      {user && user.map((userData, i) =>
-        <Card >
-          <Card.Content>
-            <Image
-              floated='right'
-              size='mini'
-              src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
-            />
+      {user && user.map((userData, i) => {
+        const productStatus =  product?.status ? product?.status[`${i}`] : false;
+        return (
+          <Card >
+            <Card.Content>
+              <Image
+                floated='right'
+                size='mini'
+                src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+              />
 
-            <Card.Header >Developer</Card.Header>
-            <Card.Meta>Name : {userData.name.first} </Card.Meta>
-            <Card.Description>
-              Status : <strong>{product.status ? 'Active' : 'Disabled'}</strong>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className='ui two buttons'>
-              <Button basic color={product.status ? 'red' : 'green'} onClick={product.active} >
-                {product.status ? 'Disable User' : 'Activate User'}
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
+              <Card.Header >Developer</Card.Header>
+              <Card.Meta>Name : {userData.name.first} </Card.Meta>
+              <Card.Description>
+                Status : <strong>{!productStatus ? 'Active' : 'Disabled'}</strong>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <div className='ui two buttons'>?
+                <Button basic color={productStatus ? 'red' : 'green'} onClick={() => product.active(i)} >
+                  {productStatus ? 'Disable User' : 'Activate User'}
+                </Button>
+              </div>
+            </Card.Content>
+          </Card>
+        )
+      }
       )}
     </Card.Group>
 

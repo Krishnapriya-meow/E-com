@@ -3,27 +3,23 @@ import './App.css';
 import ProductContext from './products/ProductContext';
 import { ProductList } from './products/ProductList';
  
-interface user {
-  id:number,
-  status:boolean
+type User = {
+  [id: number]: boolean;
 }
 function App() {
-  let user :user={
-    id:0,
-    status:false
-  } 
 
-  const [status, setStatus] = useState(false);
-  const handleActive= () => {
-    setStatus(true);
+  const [status, setStatus] = useState<User>({});
+  const handleActive= (i: number) => {
+    const state: User = JSON.parse(JSON.stringify(status))
+    state[i] = !state[i];
+    setStatus(state);
   };
   return (
     <div className="App">
       <header className="App-header">
-      <ProductContext.Provider value={{ status:status, active: handleActive}}>
+      <ProductContext.Provider value={{ status, active: handleActive}}>
       <ProductList/>
       </ProductContext.Provider>
-      
       </header>
     </div>
   );
